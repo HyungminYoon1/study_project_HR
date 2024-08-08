@@ -6,6 +6,8 @@ import org.project.option.AttendManageOption;
 import org.project.option.MainOptions;
 import org.project.service.Service;
 
+import java.sql.SQLException;
+
 public class Controller extends JDBCConnect {
 
     private final Service service = new Service();
@@ -35,7 +37,7 @@ public class Controller extends JDBCConnect {
                             case INCORRECT :
                                 break;
                             case INSERT_ATTEND:
-                                String sql = "insert into Members ('Member_09','Department_03','감자')";
+                                String sql = "insert into MEMBERS values('Member_09','Department_03','감자')";
                                 stmt.executeUpdate(sql);
                                 System.out.println("insert");
                                 break;

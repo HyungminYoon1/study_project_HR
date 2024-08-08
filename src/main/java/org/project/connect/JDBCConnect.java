@@ -7,9 +7,9 @@ public class JDBCConnect {
     public Statement stmt;
     public ResultSet rs;
     public JDBCConnect() {
-        String DB_URL = "jdbc:mysql://192.168.0.12:3306/project_hr";   // container name
-        String USER = "HRadmin";
-        String PASS = "hrproject2024";
+        String DB_URL = "jdbc:mysql://172.30.1.27:3305/TEST";   // container name
+        String USER = "test";
+        String PASS = "1234";
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement();
