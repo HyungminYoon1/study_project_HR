@@ -5,7 +5,6 @@ public class Employee {
     String employeeId;
     String name;
     String departmentId;
-    AttendDto workStatus;
 
 
     public String getEmployeeId() {
@@ -18,5 +17,17 @@ public class Employee {
 
     public String getDepartmentId() {
         return departmentId;
+    }
+
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
     }
 }

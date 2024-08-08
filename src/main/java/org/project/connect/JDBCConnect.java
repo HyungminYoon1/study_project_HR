@@ -7,7 +7,7 @@ public class JDBCConnect {
     public Statement stmt;
     public ResultSet rs;
     public JDBCConnect() {
-        String DB_URL = "jdbc:mysql://172.30.1.27:3305/TEST";   // container name
+        String DB_URL = "jdbc:mysql://localhost:3305/TEST";   // container name
         String USER = "test";
         String PASS = "1234";
         try {

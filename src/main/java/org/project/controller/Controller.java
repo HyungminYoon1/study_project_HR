@@ -8,13 +8,14 @@ import org.project.service.Service;
 
 import java.sql.SQLException;
 
-public class Controller extends JDBCConnect {
+public class Controller {
 
-    private final Service service = new Service();
+    private Service service;
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
     public void run() {
+        service= new Service();
         boolean running = true;
         outputView.displaySelectMainOptions();
         while (running) {
@@ -37,24 +38,21 @@ public class Controller extends JDBCConnect {
                             case INCORRECT :
                                 break;
                             case INSERT_ATTEND:
-                                String sql = "insert into MEMBERS values('Member_09','Department_03','감자')";
-                                stmt.executeUpdate(sql);
-                                System.out.println("insert");
+                                service.insert();
                                 break;
                             case UPDATE_ATTEND:
-                                System.out.println("update");
+                                service.update();
                                 break;
                             case DELETE_ATTEND:
-                                System.out.println("delete");
+                                service.delete();
                                 break;
                             case VIEW_MONTHLY_WORKING_STATUS_EMPLOYEES:
-                                System.out.println("view emp");
+                                service.viewMonthlyWorkingStatusEmployee();
                                 break;
                             case VIEW_MONTHLY_WORKING_STATUS_DEPARTMENTS:
-                                System.out.println("view dep");
+                                service.viewMonthlyWorkingStatusDepartment();
                                 break;
                             case TO_MAIN:
-                                System.out.println("tomain");
                                 break;
                         }
                     case PAYROLL_SETTLEMENT:
