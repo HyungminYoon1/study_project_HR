@@ -1,4 +1,7 @@
-package org.example;
+package org.project;
+
+import org.project.dto.Department;
+import org.project.dto.Employee;
 
 import java.util.Scanner;
 
@@ -29,7 +32,7 @@ public class OutputView {
         System.out.print("이름: ");
         employee.getName();
         System.out.println("부서: ");
-        employee.getDepartment();
+        employee.getDepartmentId();
         System.out.println("2024년 8월 근태 현황: ");
 
         // ********** 이하 구현 필요

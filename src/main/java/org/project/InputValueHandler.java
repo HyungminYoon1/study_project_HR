@@ -1,4 +1,6 @@
-package org.example;
+package org.project;
+
+import org.project.option.MainOptions;
 
 public class InputValueHandler {
 

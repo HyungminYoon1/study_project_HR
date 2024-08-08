@@ -1,14 +1,8 @@
-package org.example;
-
-import java.util.Set;
-
+package org.project.dto;
 public class Department {
 
     String departmentId;
     String departmentName;
-    Set<Employee> members;
-
-
 
     public String getDepartmentId() {
         return departmentId;
@@ -18,7 +12,4 @@ public class Department {
         return departmentName;
     }
 
-    public Set<Employee> getMembers() {
-        return members;
-    }
 }

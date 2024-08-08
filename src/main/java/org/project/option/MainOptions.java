@@ -1,11 +1,11 @@
-package org.example;
+package org.project.option;
 
 public enum MainOptions {
     INCORRECT(-2),
     INPUT_CANCEL_GO_BACK(-1),
     ORGANIZATION_JOB_MANAGEMENT(1),
     PERSONNEL_ADMINISTRATION(2),
-    EMPLOYMENT_WORKING_STATUS_MANAGEMENT(3),
+    EMPLOYMENT_WORKING_STATUS_MANAGEMENT(3), //근태관리
     PAYROLL_SETTLEMENT(4),
     SOCIAL_INSURANCE(5),
     ASSESSMENT_MANAGEMENT(6),
@@ -13,7 +13,7 @@ public enum MainOptions {
     PROMOTION_MANAGEMENT(8),
     IMPORTANT_MEMBERS_MANAGEMENT(9),
     MONTHLY_STATUS_SUMMURY(10),
-    EXIT(0);
+    EXIT(0); //종료
 
 
     private final int number;

@@ -1,6 +1,12 @@
-package org.example;
+package org.project.controller;
 
-public class Controller {
+import org.project.*;
+import org.project.connect.JDBCConnect;
+import org.project.option.AttendManageOption;
+import org.project.option.MainOptions;
+import org.project.service.Service;
+
+public class Controller extends JDBCConnect {
 
     private final Service service = new Service();
     private final InputView inputView = new InputView();
@@ -23,8 +29,32 @@ public class Controller {
                         // 미구현;
                         break;
                     case EMPLOYMENT_WORKING_STATUS_MANAGEMENT:
-                        // 미구현
-                        break;
+                        // 미구현'
+                        AttendManageOption attendManageOption = AttendManageOption.fromInput(inputView.getEmploymentStatusOptions());
+                        switch (attendManageOption){
+                            case INCORRECT :
+                                break;
+                            case INSERT_ATTEND:
+                                String sql = "insert into Members ('Member_09','Department_03','감자')";
+                                stmt.executeUpdate(sql);
+                                System.out.println("insert");
+                                break;
+                            case UPDATE_ATTEND:
+                                System.out.println("update");
+                                break;
+                            case DELETE_ATTEND:
+                                System.out.println("delete");
+                                break;
+                            case VIEW_MONTHLY_WORKING_STATUS_EMPLOYEES:
+                                System.out.println("view emp");
+                                break;
+                            case VIEW_MONTHLY_WORKING_STATUS_DEPARTMENTS:
+                                System.out.println("view dep");
+                                break;
+                            case TO_MAIN:
+                                System.out.println("tomain");
+                                break;
+                        }
                     case PAYROLL_SETTLEMENT:
                         //미구현
                         break;

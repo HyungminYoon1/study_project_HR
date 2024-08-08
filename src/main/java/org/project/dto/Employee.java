@@ -1,11 +1,11 @@
-package org.example;
+package org.project.dto;
 
 public class Employee {
 
     String employeeId;
     String name;
-    String department;
-    DailyWorkingStatus workStatus;
+    String departmentId;
+    AttendDto workStatus;
 
 
     public String getEmployeeId() {
@@ -16,7 +16,7 @@ public class Employee {
         return name;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getDepartmentId() {
+        return departmentId;
     }
 }
