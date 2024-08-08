@@ -6,5 +6,5 @@ public class DailyWorkingStatus {
     String day;
 
     boolean isAbsent;
-    ENUM status;
+    Status status ;
 }
