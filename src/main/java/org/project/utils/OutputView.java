@@ -81,6 +81,10 @@ public class OutputView {
         System.out.println("해당직원("+employeeId+")의 지정된 날짜("+date+")로 입력된 근무 정보가 없습니다.");
     }
 
+    public void DisplayNoMonthlyWorkingStatusData(String departmentId, String month) {
+        System.out.println("해당부서("+departmentId+")의 지정된 월("+month+")로 조회된 정보가 없습니다.");
+    }
+
     public void DisplaySuccessDeletingWorkingStatusData(String employeeId, String date) {
         System.out.println("삭제 성공: 해당직원("+employeeId+")의 지정된 날짜("+date+")로 입력된 근무 정보를 삭제하였습니다.");
     }

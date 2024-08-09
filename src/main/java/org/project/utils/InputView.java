@@ -1,6 +1,6 @@
 package org.project.utils;
 
-import org.project.InputValueHandler;
+import org.project.exception.InputValueHandler;
 
 import java.io.*;
 import java.util.Scanner;
@@ -53,7 +53,7 @@ public class InputView {
         }
         return "EMPLOYEE_"+response.toString();
     }
-    public String getDateBf(){
+    public String getWorkDateBf(){
         try {
             response.delete(0,response.length());
             bw.write("날짜 입력 (YYYY-MM-DD): [EX: 2024-08-01] >> ");
@@ -63,6 +63,17 @@ public class InputView {
             throw new RuntimeException(e);
         }
         return inputValueHandler.dueDateValidate(response.toString());
+    }
+    public String getWorkMomthBf(){
+        try {
+            response.delete(0,response.length());
+            bw.write("날짜 입력 (YYYY-MM): [EX: 2024-08] ");
+            bw.flush();
+            response.append(br.readLine());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return inputValueHandler.dueMonthValidate(response.toString());
     }
     public String getWorkingStatusBf(){
         try {

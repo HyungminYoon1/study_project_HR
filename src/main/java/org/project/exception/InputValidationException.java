@@ -1,4 +1,4 @@
-package org.project;
+package org.project.exception;
 
 public class InputValidationException extends RuntimeException {
     public InputValidationException(String msg) {

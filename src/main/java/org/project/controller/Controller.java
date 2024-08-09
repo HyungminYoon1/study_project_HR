@@ -1,6 +1,6 @@
 package org.project.controller;
 
-import org.project.*;
+import org.project.exception.InputValidationException;
 import org.project.option.AttendManageOption;
 import org.project.option.MainOptions;
 import org.project.service.AttendService;
