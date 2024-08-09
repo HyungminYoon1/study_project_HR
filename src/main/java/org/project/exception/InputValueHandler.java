@@ -37,6 +37,7 @@ public class InputValueHandler {
     }
 
     public String dueMonthValidate(String inputString) {
+        System.out.println(inputString);
         if (inputString.equals(String.valueOf(AttendManageOption.TO_MAIN.getNumber()))) { // 입력취소
             throw new InputValidationException(Messages.GO_BACK.getMessage());
         }

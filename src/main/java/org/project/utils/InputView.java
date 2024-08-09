@@ -73,7 +73,7 @@ public class InputView {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return inputValueHandler.dueMonthValidate(response.toString());
+        return response.toString();
     }
     public String getWorkingStatusBf(){
         try {

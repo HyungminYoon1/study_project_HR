@@ -1,18 +1,19 @@
 package org.project.service;
 
+import org.project.dto.*;
 import org.project.utils.Messages;
 import org.project.utils.OutputView;
 import org.project.connect.JDBCConnect;
-import org.project.dto.AttendDto;
-import org.project.dto.Department;
-import org.project.dto.Employee;
-import org.project.dto.SelectDto;
 import org.project.utils.InputView;
 
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class AttendService extends JDBCConnect {
     private AttendDto attendDto;
@@ -22,7 +23,9 @@ public final class AttendService extends JDBCConnect {
     private StringBuffer response;
     private InputView inputView;
     private OutputView outputView;
-
+    private int count =0;
+    private int notWorked =0;
+    private int workRate = 0;
     public AttendService() {
         attendDto = new AttendDto();
         selectDto = new SelectDto();
@@ -100,6 +103,7 @@ public final class AttendService extends JDBCConnect {
     }
 
     public void viewMonthlyWorkingStatusEmployee(){
+        HashMap<String, Object> row = new HashMap<>();
         try {
             response.append(inputView.getWorkMonthBf());
             selectDto.setSelectWorkMonth(response.toString());
@@ -123,13 +127,54 @@ public final class AttendService extends JDBCConnect {
                 String column2 = rs.getString("근무일");
                 String column3 = rs.getString("현황");
 
-                HashMap<String, Object> row = new HashMap<>();
                 row.put("사원명", column1);
                 row.put("근무일", column2);
                 row.put("현황", column3);
                 System.out.println(row);
+                count++;
             }
+            System.out.println("출근일수 : " +count + "일");
+            workRate = count*100/24;
+            System.out.println("결근일 : " + (24-count)+"일");
+            System.out.println("출근율" + workRate + "%");
+            count=0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void viewMonthlyWorkingStatusEmployees(String employeeId){
+        HashMap<String, Object> row = new HashMap<>();
+        try {
+            response.append(inputView.getWorkMonthBf());
+            selectDto.setSelectWorkMonth(response.toString());
+            response.delete(0,response.length());
+            String sql =
+                    "SELECT E.EMPLOYEE_NAME AS 사원명,  A.WORKDATE AS '근무일', C.COMMUTE_NAME AS '현황'\n" +
+                            "FROM EMPLOYEES E\n" +
+                            "JOIN DEPARTMENTS D ON E.DEPARTMENT_FK = D.DEPARTMENT_PK\n" +
+                            "JOIN ATTENDS A ON E.EMPLOYEE_PK = A.EMPLOYEE_FK\n" +
+                            "JOIN COMMUTES C ON A.COMMUTE_FK = C.COMMUTE_PK\n" +
+                            "WHERE E.EMPLOYEE_PK = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,employeeId);
+            pstmt.setString(2,"%"+selectDto.getSelectWorkMonth()+"%");
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String column1 = rs.getString("사원명");
+                String column2 = rs.getString("근무일");
+                String column3 = rs.getString("현황");
 
+                row.put("사원명", column1);
+                row.put("근무일", column2);
+                row.put("현황", column3);
+                System.out.println(row);
+                count++;
+            }
+            System.out.println("출근일수 : " +count + "일");
+            workRate = count*100/24;
+            System.out.println("결근일 : " + (24-count)+"일");
+            System.out.println("출근율" + workRate + "%");
+            count=0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -153,30 +198,25 @@ public final class AttendService extends JDBCConnect {
     }
 
     public void viewMonthlyWorkingStatusDepartment(){
+        Map<String, PersonalWorkingViewDto> PWV = new HashMap<>();
+        List<String> employeeList = new ArrayList<>();
         // 작성중
         String departmentId = inputView.getDepartmentId();
         String departmentName = getDepartmentName(departmentId);
-        System.out.println(departmentName);
-
-        /*String month = inputView.getMonth();
-        String sql =
-                "SELECT E.EMPLOYEE_NAME AS 사원명,  A.WORKDATE AS '근무일', C.COMMUTE_NAME AS '현황'\n" +
-                "FROM EMPLOYEES E\n" +
-                "JOIN DEPARTMENTS D ON E.DEPARTMENT_FK = D.DEPARTMENT_PK\n" +
-                "JOIN ATTENDS A ON E.EMPLOYEE_PK = A.EMPLOYEE_FK\n" +
-                "JOIN COMMUTES C ON A.COMMUTE_FK = C.COMMUTE_PK\n" +
-                "WHERE D.DEPARTMENTS_PK = ? AND A.WORKDATE LIKE ?";
-        PreparedStatement pstmt;
+        System.out.println("부서 :" + departmentName);
 
         try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, departmentId);
-            pstmt.setString(2, month);
-            pstmt.executeUpdate();
-            pstmt.close();
+        String sql = "SELECT * FROM EMPLOYEES WHERE DEPARTMENT_FK = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,departmentId);
+            rs=pstmt.executeQuery();
+            if(rs.next()){
+                String employeeId = rs.getString("EMPLOYEE_PK");
+
+            }
         } catch (SQLException e) {
-            outputView.DisplayNoMonthlyWorkingStatusData(departmentId, month);
-        }*/
+            throw new RuntimeException(e);
+        }
 
         System.out.println("viewMothD"); // hmyoon 작성
     }
