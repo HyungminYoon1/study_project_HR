@@ -8,7 +8,8 @@ public enum Messages {
     GO_BACK("이전단계로 이동."),
     CANCEL_RESTART("취소. 재시작"),
     SELECT("선택하세요: "),
-    PLEASE_INPUT_DATE("날짜를 입력하세요");
+    PLEASE_INPUT_DATE("날짜를 입력하세요"),
+    WRONG_INPUT("잘못된 입력");
 
     private final String message;
 

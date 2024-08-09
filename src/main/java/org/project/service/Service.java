@@ -1,6 +1,7 @@
 package org.project.service;
 
 import org.project.InputView;
+import org.project.Messages;
 import org.project.OutputView;
 import org.project.connect.JDBCConnect;
 import org.project.dto.AttendDto;
@@ -95,6 +96,9 @@ public final class Service extends JDBCConnect {
     public void delete(){
         String employeeId = inputView.getEmployeeId();
         String date = inputView.getDate();
+        while(date.equals(Messages.WRONG_INPUT.getMessage())){
+            date = inputView.getDate();
+        }
         String sql = "DELETE FROM ATTENDS WHERE EMPLOYEE_FK=? and WORKDATE=? ";
         PreparedStatement pstmt;
 
@@ -108,7 +112,6 @@ public final class Service extends JDBCConnect {
         } catch (SQLException e) {
             outputView.DisplayNoWorkingStatusData(employeeId, date);
         }
-        System.out.println("delete"); // hmyoon 작성
     }
 
     public void viewMonthlyWorkingStatusEmployee(){
@@ -153,6 +156,28 @@ public final class Service extends JDBCConnect {
         }
     }
     public void viewMonthlyWorkingStatusDepartment(){
+        // 작성중
+        /*String departmentId = inputView.getDepartmentId();
+        String month = inputView.getMonth();
+        String sql =
+                "SELECT E.EMPLOYEE_NAME AS 사원명,  A.WORKDATE AS '근무일', C.COMMUTE_NAME AS '현황'\n" +
+                "FROM EMPLOYEES E\n" +
+                "JOIN DEPARTMENTS D ON E.DEPARTMENT_FK = D.DEPARTMENT_PK\n" +
+                "JOIN ATTENDS A ON E.EMPLOYEE_PK = A.EMPLOYEE_FK\n" +
+                "JOIN COMMUTES C ON A.COMMUTE_FK = C.COMMUTE_PK\n" +
+                "WHERE D.DEPARTMENTS_PK = ? AND A.WORKDATE LIKE ?";
+        PreparedStatement pstmt;
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, departmentId);
+            pstmt.setString(2, month);
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            outputView.DisplayNoMonthlyWorkingStatusData(departmentId, month);
+        }*/
+
         System.out.println("viewMothD"); // hmyoon 작성
     }
 

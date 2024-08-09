@@ -49,4 +49,14 @@ public class InputView {
         return workStatus;
     }
 
+    public String getMonth(){
+        System.out.print("월 입력 (YYYY-MM): [EX: 2024-08] >> ");
+        String month = scanner.next();
+        return inputValueHandler.dueMonthValidate(month);
+    }
+
+    public String getDepartmentId() {
+        System.out.println("부서 아이디를 입력: [] >> ");
+        return ""; // 작성중
+    }
 }
