@@ -1,18 +1,17 @@
 package org.project.service;
 
-import org.project.InputView;
-import org.project.OutputView;
+import org.project.utils.OutputView;
 import org.project.connect.JDBCConnect;
 import org.project.dto.AttendDto;
-import org.project.dto.Employee;
 import org.project.dto.SelectDto;
+import org.project.utils.InputView;
 
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public final class Service extends JDBCConnect {
+public final class AttendService extends JDBCConnect {
     private AttendDto attendDto;
     private SelectDto selectDto;
     private BufferedReader br;
@@ -21,7 +20,7 @@ public final class Service extends JDBCConnect {
     private InputView inputView;
     private OutputView outputView;
 
-    public Service() {
+    public AttendService() {
         attendDto = new AttendDto();
         selectDto = new SelectDto();
         br = new BufferedReader(new InputStreamReader(System.in));
@@ -33,19 +32,13 @@ public final class Service extends JDBCConnect {
 
     public void insert(){
         try {
-            bw.write("직원 ID 입력");
-            bw.flush();
-            response.append(br.readLine());
+            response.append(inputView.getEmployeeIdBf());
             attendDto.setEmployeeId(response.toString());
             response.delete(0,response.length());
-            bw.write("날짜입력 (YYYY-MM-DD) : ");
-            bw.flush();
-            response.append(br.readLine());
+            response.append(inputView.getDateBf());
             attendDto.setWorkDate(response.toString());
             response.delete(0,response.length());
-            bw.write("근무 상태 입력 [출근/결근/휴가/병가/연차]");
-            bw.flush();
-            response.append(br.readLine());
+            response.append(inputView.getWorkingStatusBf());
             attendDto.setCommuteId(response.toString());
             response.delete(0,response.length());
             String sql = "INSERT INTO ATTENDS (EMPLOYEE_FK, WORKDATE, COMMUTE_FK) VALUES(?,?,?)";
@@ -57,25 +50,17 @@ public final class Service extends JDBCConnect {
             pstmt.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
     public void update(){
         try {
-            bw.write("수정할 직원ID를 입력해 주세요");
-            bw.flush();
-            response.append(br.readLine());
+            response.append(inputView.getEmployeeIdBf());
             attendDto.setEmployeeId(response.toString());
             response.delete(0,response.length());
-            bw.write("수정할 날짜를 입력해 주세요 ex) 2024-08-01");
-            bw.flush();
-            response.append(br.readLine());
+            response.append(inputView.getDateBf());
             attendDto.setWorkDate(response.toString());
             response.delete(0,response.length());
-            bw.write("수정할 상태를 입력해 주세요 ex)출근/결근/휴가/병가/연차");
-            bw.flush();
-            response.append(br.readLine());
+            response.append(inputView.getWorkingStatusBf());
             attendDto.setCommuteId(response.toString());
             response.delete(0,response.length());
             String sql = "UPDATE ATTENDS SET COMMUTE_FK = ? WHERE EMPLOYEE_FK = ? AND WORKDATE = ?";
@@ -85,8 +70,6 @@ public final class Service extends JDBCConnect {
             pstmt.setString(3,attendDto.getWorkDate());
             pstmt.executeUpdate();
             pstmt.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -113,14 +96,10 @@ public final class Service extends JDBCConnect {
 
     public void viewMonthlyWorkingStatusEmployee(){
         try {
-            bw.write("조회할 날짜를 입력해 주세요 EX)2024-08");
-            bw.flush();
-            response.append(br.readLine());
+            response.append(inputView.getDateBf());
             selectDto.setSelectWorkDate(response.toString());
             response.delete(0,response.length());
-            bw.write("조회할 직원ID를 입력해 주세요 ");
-            bw.flush();
-            response.append(br.readLine());
+            response.append(inputView.getEmployeeId());
             selectDto.setSelectEmployee(response.toString());
             response.delete(0,response.length());
             String sql =
@@ -146,8 +125,6 @@ public final class Service extends JDBCConnect {
                 System.out.println(row);
             }
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
