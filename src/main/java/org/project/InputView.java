@@ -56,7 +56,8 @@ public class InputView {
     }
 
     public String getDepartmentId() {
-        System.out.println("부서 아이디를 입력: [] >> ");
-        return ""; // 작성중
+        System.out.println("부서 아이디를 입력: [EX: 01] >> ");
+        String departmentId = scanner.next();
+        return "DEPARTMENT_"+departmentId;
     }
 }

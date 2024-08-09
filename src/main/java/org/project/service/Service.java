@@ -1,15 +1,18 @@
 package org.project.service;
 
+import org.project.InputValidationException;
 import org.project.InputView;
 import org.project.Messages;
 import org.project.OutputView;
 import org.project.connect.JDBCConnect;
 import org.project.dto.AttendDto;
+import org.project.dto.Department;
 import org.project.dto.Employee;
 import org.project.dto.SelectDto;
 
 import java.io.*;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -155,10 +158,32 @@ public final class Service extends JDBCConnect {
             throw new RuntimeException(e);
         }
     }
+
+    public String getDepartmentName(String departmentId) {
+        String sql = "SELECT DEPARTMENT_NAME FROM DEPARTMENTS WHERE DEPARTMENT_PK = ?";
+        PreparedStatement pstmt;
+        ResultSet rs = null;
+        String departmentName = "";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, departmentId);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                departmentName = rs.getString("DEPARTMENT_NAME");
+            }
+        } catch (SQLException e) {
+            return Messages.NONE_DEPARTMENT.getMessage();
+        }
+        return departmentName;
+    }
+
     public void viewMonthlyWorkingStatusDepartment(){
         // 작성중
-        /*String departmentId = inputView.getDepartmentId();
-        String month = inputView.getMonth();
+        String departmentId = inputView.getDepartmentId();
+        String departmentName = getDepartmentName(departmentId);
+        System.out.println(departmentName);
+
+        /*String month = inputView.getMonth();
         String sql =
                 "SELECT E.EMPLOYEE_NAME AS 사원명,  A.WORKDATE AS '근무일', C.COMMUTE_NAME AS '현황'\n" +
                 "FROM EMPLOYEES E\n" +
@@ -180,6 +205,4 @@ public final class Service extends JDBCConnect {
 
         System.out.println("viewMothD"); // hmyoon 작성
     }
-
-
 }
