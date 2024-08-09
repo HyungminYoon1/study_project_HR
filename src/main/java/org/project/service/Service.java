@@ -95,7 +95,7 @@ public final class Service extends JDBCConnect {
     public void delete(){
         String employeeId = inputView.getEmployeeId();
         String date = inputView.getDate();
-        String sql = "DELETE FROM ATTENDS WHERE EMPLOYEEID=? and DATE=? ";
+        String sql = "DELETE FROM ATTENDS WHERE EMPLOYEE_FK=? and WORKDATE=? ";
         PreparedStatement pstmt;
 
         try {
