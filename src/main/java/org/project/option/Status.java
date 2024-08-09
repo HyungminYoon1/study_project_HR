@@ -1,4 +1,4 @@
-package org.project;
+package org.project.option;
 
 public enum Status {
     NORMAL("출근"),

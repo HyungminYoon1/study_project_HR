@@ -1,21 +1,21 @@
 package org.project.controller;
 
-import org.project.*;
-import org.project.connect.JDBCConnect;
+import org.project.exception.InputValidationException;
 import org.project.option.AttendManageOption;
 import org.project.option.MainOptions;
-import org.project.service.Service;
-
-import java.sql.SQLException;
+import org.project.service.AttendService;
+import org.project.utils.InputView;
+import org.project.utils.Messages;
+import org.project.utils.OutputView;
 
 public class Controller {
 
-    private Service service;
+    private AttendService service;
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        service= new Service();
+        service= new AttendService();
         boolean running = true;
         outputView.displaySelectMainOptions();
         while (running) {

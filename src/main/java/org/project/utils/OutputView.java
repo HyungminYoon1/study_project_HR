@@ -1,7 +1,8 @@
-package org.project;
+package org.project.utils;
 
 import org.project.dto.Department;
 import org.project.dto.Employee;
+import org.project.utils.Messages;
 
 import java.util.Scanner;
 
