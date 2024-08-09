@@ -64,7 +64,7 @@ public class InputView {
         }
         return inputValueHandler.dueDateValidate(response.toString());
     }
-    public String getWorkMomthBf(){
+    public String getWorkMonthBf(){
         try {
             response.delete(0,response.length());
             bw.write("날짜 입력 (YYYY-MM): [EX: 2024-08] ");

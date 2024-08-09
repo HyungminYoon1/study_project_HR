@@ -99,7 +99,7 @@ public final class AttendService extends JDBCConnect {
 
     public void viewMonthlyWorkingStatusEmployee(){
         try {
-            response.append(inputView.getWorkDateBf());
+            response.append(inputView.getWorkMonthBf());
             selectDto.setSelectWorkMonth(response.toString());
             response.delete(0,response.length());
             response.append(inputView.getEmployeeId());
