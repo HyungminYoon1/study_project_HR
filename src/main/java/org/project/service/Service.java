@@ -1,5 +1,7 @@
 package org.project.service;
 
+import org.project.InputView;
+import org.project.OutputView;
 import org.project.connect.JDBCConnect;
 import org.project.dto.AttendDto;
 import org.project.dto.Employee;
@@ -8,17 +10,21 @@ import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class Service extends JDBCConnect {
+public final class Service extends JDBCConnect {
     private AttendDto attendDto;
     private BufferedReader br;
     private BufferedWriter bw;
     private StringBuffer response;
+    private InputView inputView;
+    private OutputView outputView;
 
     public Service() {
         attendDto = new AttendDto();
         br = new BufferedReader(new InputStreamReader(System.in));
         bw = new BufferedWriter(new OutputStreamWriter(System.out));
         response = new StringBuffer(500);
+        inputView = new InputView();
+        outputView = new OutputView();
     }
 
     public void insert(){
@@ -59,13 +65,29 @@ public class Service extends JDBCConnect {
         System.out.println("update");
     }
     public void delete(){
-        System.out.println("delete");
+        String employeeId = inputView.getEmployeeId();
+        String date = inputView.getDate();
+        String sql = "DELETE FROM ATTENDS WHERE EMPLOYEEID=? and DATE=? ";
+        PreparedStatement pstmt;
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, employeeId);
+            pstmt.setString(2, date);
+            pstmt.executeUpdate();
+            pstmt.close();
+            outputView.DisplaySuccessDeletingWorkingStatusData(employeeId, date);
+        } catch (SQLException e) {
+            outputView.DisplayNoWorkingStatusData(employeeId, date);
+        }
+        System.out.println("delete"); // hmyoon 작성
     }
+
     public void viewMonthlyWorkingStatusEmployee(){
         System.out.println("viewmonthE");
     }
     public void viewMonthlyWorkingStatusDepartment(){
-        System.out.println("viewMothD");
+        System.out.println("viewMothD"); // hmyoon 작성
     }
 
 

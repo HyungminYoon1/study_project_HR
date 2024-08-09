@@ -34,13 +34,13 @@ public class InputView {
     public String getEmployeeId(){
         System.out.print("직원 ID 입력: [EX: 12345] >> ");
         String employeeId = scanner.next();
-        return employeeId;
+        return "EMPLOYEE_"+employeeId;
     }
 
     public String getDate(){
         System.out.print("날짜 입력 (YYYY-MM-DD): [EX: 2024-08-01] >> ");
         String date = scanner.next();
-        return date;
+        return inputValueHandler.dueDateValidate(date);
     }
 
     public String getWorkingStatus(){
@@ -48,4 +48,5 @@ public class InputView {
         String workStatus = scanner.next();
         return workStatus;
     }
+
 }

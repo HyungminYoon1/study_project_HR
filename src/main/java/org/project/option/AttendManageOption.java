@@ -23,7 +23,7 @@ public enum AttendManageOption {
         return INCORRECT;
     }
 
-    private int getNumber() {
+    public int getNumber() {
         return attendOption;
     }
 }
