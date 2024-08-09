@@ -1,11 +1,12 @@
 package org.project.exception;
 
-import org.project.exception.InputValidationException;
 import org.project.option.AttendManageOption;
 import org.project.option.MainOptions;
+import org.project.option.WorkingStatus;
 import org.project.utils.Messages;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -19,7 +20,7 @@ public class InputValueHandler {
         }
     }
 
-    public String dueDateValidate(String inputString) {
+    public String dateFormValidate(String inputString) {
         if (inputString.equals(String.valueOf(AttendManageOption.TO_MAIN.getNumber()))) { // 입력취소
             throw new InputValidationException(Messages.GO_BACK.getMessage());
         }
@@ -36,13 +37,12 @@ public class InputValueHandler {
         }
     }
 
-    public String dueMonthValidate(String inputString) {
-        System.out.println(inputString);
+    public String monthFormValidate(String inputString) {
         if (inputString.equals(String.valueOf(AttendManageOption.TO_MAIN.getNumber()))) { // 입력취소
             throw new InputValidationException(Messages.GO_BACK.getMessage());
         }
         try {
-            LocalDate.parse(inputString, DateTimeFormatter.ofPattern("yyyy-MM")); // 문자열을 LocalDate로 변환 시도
+            YearMonth.parse(inputString, DateTimeFormatter.ofPattern("yyyy-MM")); // 문자열을 LocalDate로 변환 시도
             return inputString;
         } catch (DateTimeParseException e) { // 잘못된 날짜 입력
             if (inputString.isBlank()) {
@@ -52,5 +52,16 @@ public class InputValueHandler {
             }
             return Messages.WRONG_INPUT.getMessage();
         }
+    }
+
+    public String workingStatusValidate(String inputString) {
+        if (inputString.equals(String.valueOf(AttendManageOption.TO_MAIN.getNumber()))) { // 입력취소
+            throw new InputValidationException(Messages.GO_BACK.getMessage());
+        }
+        String revisedInputStr = WorkingStatus.fromInput(inputString).getWorkingStatusStr();
+        if(inputString.equals( revisedInputStr )) {
+            return inputString;
+        }
+        return WorkingStatus.ERROR.getWorkingStatusStr();
     }
 }

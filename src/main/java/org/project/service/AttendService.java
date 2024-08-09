@@ -18,8 +18,6 @@ import java.util.Map;
 public final class AttendService extends JDBCConnect {
     private AttendDto attendDto;
     private SelectDto selectDto;
-    private BufferedReader br;
-    private BufferedWriter bw;
     private StringBuffer response;
     private InputView inputView;
     private OutputView outputView;
@@ -29,8 +27,6 @@ public final class AttendService extends JDBCConnect {
     public AttendService() {
         attendDto = new AttendDto();
         selectDto = new SelectDto();
-        br = new BufferedReader(new InputStreamReader(System.in));
-        bw = new BufferedWriter(new OutputStreamWriter(System.out));
         response = new StringBuffer(500);
         inputView = new InputView();
         outputView = new OutputView();
@@ -105,7 +101,11 @@ public final class AttendService extends JDBCConnect {
     public void viewMonthlyWorkingStatusEmployee(){
         HashMap<String, Object> row = new HashMap<>();
         try {
-            response.append(inputView.getWorkMonthBf());
+            String month = inputView.getMonth();
+            while(month.equals(Messages.WRONG_INPUT.getMessage())){
+                month = inputView.getMonth();
+            }
+            response.append(month);
             selectDto.setSelectWorkMonth(response.toString());
             response.delete(0,response.length());
             response.append(inputView.getEmployeeId());
@@ -144,7 +144,6 @@ public final class AttendService extends JDBCConnect {
     }
     public void viewMonthlyWorkingStatusEmployees(String employeeId,String workMonth){
         Map<String, String>employeeMap = new HashMap<>();
-        HashMap<String, Object> row = new HashMap<>();
         String employeName = getEmployeeName(employeeId);
         try {
             String sql =
@@ -205,19 +204,18 @@ public final class AttendService extends JDBCConnect {
                 employeeName = rs.getString("EMPLOYEE_NAME");
             }
         } catch (SQLException e) {
-            return Messages.NONE_DEPARTMENT.getMessage();
+            return Messages.NONE_EMPLOYEE.getMessage();
         }
         return employeeName;
     }
     public void viewMonthlyWorkingStatusDepartment(){
-        Map<String, PersonalWorkingViewDto> PWV = new HashMap<>();
         List <String> employeeList = new ArrayList<>();
         // 작성중
         String departmentId = inputView.getDepartmentId();
         String departmentName = getDepartmentName(departmentId);
         System.out.println("부서 :" + departmentName);
 
-        response.append(inputView.getWorkMonthBf());
+        response.append(inputView.getMonth());
         selectDto.setSelectWorkMonth(response.toString());
         response.delete(0,response.length());
 

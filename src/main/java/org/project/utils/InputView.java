@@ -62,7 +62,7 @@ public class InputView {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return inputValueHandler.dueDateValidate(response.toString());
+        return inputValueHandler.dateFormValidate(response.toString());
     }
     public String getWorkMonthBf(){
         try {
@@ -87,16 +87,22 @@ public class InputView {
         return "COMMUTE_"+response.toString();
     }
 
+    public String getMonth(){
+        System.out.print("날짜 입력 (YYYY-MM): [EX: 2024-08] >> ");
+        String month = scanner.next();
+        return inputValueHandler.monthFormValidate(month);
+    }
+
     public String getDate(){
         System.out.print("날짜 입력 (YYYY-MM-DD): [EX: 2024-08-01] >> ");
         String date = scanner.next();
-        return inputValueHandler.dueDateValidate(date);
+        return inputValueHandler.dateFormValidate(date);
     }
 
     public String getWorkingStatus(){
         System.out.print("근무 상태 입력 (출근/퇴근/휴가 등): [EX: 출근] >> ");
         String workStatus = scanner.next();
-        return workStatus;
+        return inputValueHandler.workingStatusValidate(workStatus);
     }
 
     public String getDepartmentId() {

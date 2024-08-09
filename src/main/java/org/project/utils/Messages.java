@@ -10,7 +10,8 @@ public enum Messages {
     SELECT("선택하세요: "),
     PLEASE_INPUT_DATE("날짜를 입력하세요"),
     WRONG_INPUT("잘못된 입력"),
-    NONE_DEPARTMENT("해당 부서가 존재하지않습니다.");
+    NONE_DEPARTMENT("해당 부서가 존재하지 않습니다."),
+    NONE_EMPLOYEE("해당 직원이 존재하지 않습니다.");
 
     private final String message;
 
